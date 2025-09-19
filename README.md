@@ -3,112 +3,117 @@
 #### likrura is Kucqit Word for encryption
 this project made for privacy and user security
 
-## Installation
+# likrura
 
-```
-git clone https://github.com/KucingMunafik/likrura.git
-ln -s "$PWD"/likrura/likrura.bash /usr/local/bin/likrura
-```
-or, you can install it by downloading the tar.gz package then,unpack it: 
-```
-tar -xz likrura.tar.gz
-```
-when unpacking was done, run the install.sh file
+**likrura** is a simple Bash script for file encryption and decryption using OpenSSL with AES-256-CBC.  
+You will be securely prompted for your password each time you encrypt or decrypt a file—no passwords are stored in environment variables or on disk.
 
-```
-./install.sh
-```
-### Bash tab completion
+---
 
-Add `tools/likrura-bash-completion.bash` to your tab completion file directory.
+## ✨ Features
 
-## API/Commands
+- **Encrypt any file** with strong AES-256-CBC encryption.
+- **Decrypt previously encrypted files**.
+- **No password stored:** Prompted interactively each time.
+- **Simple CLI usage:** Just type `likrura encrypt <file>` or `likrura decrypt <file.aes>`.
+- **Cross-platform:** Works on Linux, macOS, and WSL.
 
-### encrypt
+---
 
-> encrypt \<file\> - Encryptes file with OpenSSL AES-256 cipher block chaining. Writes an encrypted file out *(ciphertext)* appending `.aes` extension.
+## 🚧 About this Fork
 
-```
-➜ likru kru ./secret-file
-enter aes-256-cbc encryption password:
-Verifying - enter aes-256-cbc encryption password:
-```
+This is a **forked and updated version** of [rakutatusan/likrura](https://github.com/rakutatusan/likrura), which has been unmaintained for 3 years.  
+Major improvements:
+- Modernized password handling (no environment variables needed)
+- User-friendly command structure and help
+- Easy installation script
 
-```
-➜ ls -alh
--rw-r--r--  1 user  group   1.0G Oct  1 13:33 secret-file
--rw-r--r--  1 user  group   1.0G Oct  1 13:34 secret-file.aes
+---
+
+## 🛠️ Installation
+
+You can install and set up everything with one command:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/fogoffaith/likrura/main/install.sh)
 ```
 
-You may optionally define the password to use when encrypting using the `CRYPTR_PASSWORD` environment variable. This enables non-interactive/batch operations.
+This will:
+- Install `openssl` if needed
+- Copy `likrura.sh` as `likrura` to `/usr/local/bin`
+- Make it executable
 
+---
+
+## 📦 Manual Installation
+
+1. **Install OpenSSL**
+
+   - Ubuntu/Debian: `sudo apt install openssl`
+   - Fedora: `sudo dnf install openssl`
+   - macOS (Homebrew): `brew install openssl`
+
+2. **Make the script executable:**
+
+   ```bash
+   chmod +x likrura.sh
+   ```
+
+3. **Copy it to your PATH:**
+
+   ```bash
+   sudo cp likrura.sh /usr/local/bin/likrura
+   ```
+
+---
+
+## 🚀 Usage
+
+### Encrypt a file
+
+```bash
+likrura encrypt myfile.txt
 ```
-➜ LIKRU_PASSWORD=A1EO7S9SsQYcPChOr47n cryptr encrypt ./secret-file
+- Prompts for password and confirmation.
+- Creates `myfile.txt.aes`.
+
+### Decrypt a file
+
+```bash
+likrura decrypt myfile.txt.aes
 ```
+- Prompts for password.
+- Restores `myfile.txt`.
 
-### decrypt
+### Help
 
-> decrypt \<file.aes\> - Decrypt encrypted file using OpenSSL AES-256 cipher block chaining. Writes a decrypted file out *(plaintext)* removing `.aes` extension.
-
-```
-➜ ls -alh
--rw-r--r--  1 user  group   1.0G Oct  1 13:34 secret-file.aes
-```
-
-```
-➜ likru dru ./secret-file.aes
-enter aes-256-cbc decryption password:
-```
-
-```
-➜ ls -alh
--rw-r--r--  1 user  group   1.0G Oct  1 13:35 secret-file
--rw-r--r--  1 user  group   1.0G Oct  1 13:34 secret-file.aes
-```
-
-You may optionally define the password to use when decrypting using the `CRYPTR_PASSWORD` environment variable. This enables non-interactive/batch operations.
-
-```
-➜ LIKRU_PASSWORD=A1EO7S9SsQYcPChOr47n cryptr decrypt ./secret-file.aes
-```
-
-### help
-
-> help - Displays help
-
-```
-➜ likru help
-Usage: likru command <command-specific-options>
-
-  kru <file>       Encrypt file
-  dru <file.aes>   Decrypt encrypted file
-  help                 Displays help
-  version              Displays the current version
-
-```
-
-### version
-
-> version - Displays the current version
-
-```
-➜ likru version
-likrura 1.0.0
+```bash
+likrura help
 ```
 
-### default
+### Version
 
-> default - Displays the current version and help
-
+```bash
+likrura version
 ```
-➜ likru
-likrura 1.0.0
 
-Usage: likru command <command-specific-options>
+---
 
-  kru <file>       Encrypt file
-  dru <file.aes>   Decrypt encrypted file
-  help                 Displays help
-  version              Displays the current version
+## 🔒 Notes
+
+- Always remember your password! Lost passwords **cannot** be recovered.
+- AES-256-CBC provides confidentiality but not integrity. For maximum security, consider using additional HMAC or authenticated encryption modes.
+
+---
+
+## 📜 License
+
+MIT (see original repo for details)
+
+---
+
+## 🙏 Credits
+
+- Forked from [rakutatusan/likrura](https://github.com/rakutatusan/likrura)
 
 ```
